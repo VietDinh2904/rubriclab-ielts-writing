@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#174b49" />
+    <meta name="description" content="RubricLab is a focused IELTS Writing learning space with visual Task 1 prompts, band-based language libraries and active practice." />
+    <title>RubricLab — IELTS Writing Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=10-spider" />
+    <link rel="stylesheet" href="./redesign.css?v=10-spider" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="RubricLab home"><span class="brand-mark">R</span><span>Rubric<span>Lab</span></span></a>
+        <nav class="main-nav" aria-label="Primary navigation">
+          <button class="nav-item active" data-view="writing">Writing Room</button>
+          <button class="nav-item" data-view="library">Library</button>
+          <button class="nav-item" data-view="practice">Practice Room</button>
+        </nav>
+        <div class="header-actions"><span class="streak"><span>●</span> 5-day streak</span><button class="avatar" aria-label="Open learner profile">HL</button></div>
+      </header>
+
+      <main>
+        <section class="view active" id="writing-view">
+          <div class="page-intro writing-intro">
+            <div><h1>Write, review, revise.</h1><p class="lead">Choose an IELTS prompt, write your response, then turn rubric feedback and comments into a clear next draft.</p></div>
+            <div class="goal-card"><div><span>Current estimate</span><strong>6.5</strong></div><div><span>Target</span><strong>7.0</strong></div><p>Focus on one improvement at a time.</p></div>
+          </div>
+
+          <div class="workspace-grid">
+            <section class="editor-card card">
+              <div class="editor-toolbar">
+                <div class="segmented" role="group" aria-label="Writing task"><button class="segment" data-task="task1">Academic Task 1 <span id="task1-prompt-count">12</span></button><button class="segment active" data-task="task2">Task 2 <span id="task2-prompt-count">24</span></button></div>
+                <div class="editor-meta"><label>Target band<select id="target-band" aria-label="Target band"><option>6.0</option><option>6.5</option><option selected>7.0</option><option>7.5</option><option>8.0</option></select></label><button class="icon-button" id="new-draft" title="Start a new draft" aria-label="Start a new draft">＋</button></div>
+              </div>
+              <details class="prompt-browser">
+                <summary><div><strong id="prompt-library-title">48 Task 2 prompts</strong><span id="prompt-library-count">Choose a topic to start writing</span></div><span class="browse-prompts">Browse prompts</span></summary>
+                <div id="prompt-list" class="prompt-list" role="list" aria-label="Writing prompts"></div>
+              </details>
+              <div class="prompt-control-row"><div class="selected-prompt-meta"><span class="field-label">Selected prompt</span><strong id="prompt-title"></strong><small id="prompt-position"></small></div><div class="prompt-navigation"><button id="previous-prompt" type="button">Previous</button><button id="next-prompt" type="button">Next</button></div></div>
+              <p id="prompt" class="prompt-copy"></p>
+              <div id="prompt-source" class="prompt-source"></div>
+              <div id="task-visual" class="task-visual" hidden></div>
+              <div class="essay-label-row"><label class="field-label" for="essay">Your response</label><span id="autosave-status">Draft saved locally</span></div>
+              <div class="annotation-tools" aria-label="Writing annotation tools">
+                <div><strong>Comment on the writing</strong><span>Select words or a sentence, then choose a comment type.</span></div>
+                <input id="annotation-comment" type="text" maxlength="180" placeholder="Add a short comment (optional)" aria-label="Annotation comment" />
+                <div class="annotation-actions"><button id="mark-strong" type="button" class="mark-button strong">Mark as strong</button><button id="mark-revision" type="button" class="mark-button revision">Needs revision</button></div>
+              </div>
+              <div class="essay-workspace">
+                <div id="essay" class="essay-input" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Your response"></div>
+                <aside id="annotation-rail" class="annotation-rail" aria-label="Comments linked to highlighted writing"><div class="annotation-empty">Comments will appear beside the highlighted text.</div></aside>
+              </div>
+              <div class="editor-footer"><div class="writing-stats"><span><strong id="word-count">0</strong> words</span><span><strong id="paragraph-count">0</strong> paragraphs</span><span id="word-target" class="status-good">On target</span></div><button class="primary-button" id="analyse-button">Review by rubric</button></div>
+            </section>
+
+            <aside class="feedback-panel card" aria-live="polite">
+              <div class="feedback-tabs" role="tablist" aria-label="Review panel">
+                <button id="rubric-tab" class="active" data-feedback-tab="rubric" role="tab" aria-controls="rubric-panel" aria-selected="true">Rubric feedback</button>
+                <button id="comments-tab" data-feedback-tab="comments" role="tab" aria-controls="comments-panel" aria-selected="false">Comments <span id="comment-count">0</span></button>
+              </div>
+              <div id="rubric-panel" class="feedback-tab-panel" role="tabpanel" aria-labelledby="rubric-tab">
+                <div class="radar-summary">
+                  <div id="rubric-radar" class="rubric-radar" role="img" aria-label="Spider chart showing scores for the four IELTS Writing criteria">
+                    <svg viewBox="0 0 180 180" aria-hidden="true"><g class="radar-grid"><polygon points="90,83.9 96.1,90 90,96.1 83.9,90"></polygon><polygon points="90,71.7 108.3,90 90,108.3 71.7,90"></polygon><polygon points="90,59.4 120.6,90 90,120.6 59.4,90"></polygon><polygon points="90,47.2 132.8,90 90,132.8 47.2,90"></polygon><polygon points="90,35 145,90 90,145 35,90"></polygon><line x1="90" y1="90" x2="90" y2="35"></line><line x1="90" y1="90" x2="145" y2="90"></line><line x1="90" y1="90" x2="90" y2="145"></line><line x1="90" y1="90" x2="35" y2="90"></line></g><polygon class="radar-score" points="90,47.2 132.8,90 90,132.8 50.3,90"></polygon><g class="radar-dots"><circle cx="90" cy="47.2" r="3.5"></circle><circle cx="132.8" cy="90" r="3.5"></circle><circle cx="90" cy="132.8" r="3.5"></circle><circle cx="50.3" cy="90" r="3.5"></circle></g><g class="radar-labels"><text x="90" y="17" text-anchor="middle">TR / TA</text><text x="164" y="94" text-anchor="middle">CC</text><text x="90" y="171" text-anchor="middle">LR</text><text x="16" y="94" text-anchor="middle">GRA</text></g></svg>
+                  </div>
+                  <div class="radar-key" aria-hidden="true"><span><b>TR / TA</b>Task response</span><span><b>CC</b>Coherence</span><span><b>LR</b>Vocabulary</span><span><b>GRA</b>Grammar</span></div>
+                  <div class="radar-copy"><div><span>Estimated result</span><div class="overall"><strong id="overall-score">7.0</strong><span>Overall band</span></div></div><span class="analysis-state"><i></i> Ready to review</span></div>
+                </div>
+                <div class="score-list">
+                  <button class="score-row active" data-criterion="TR"><span class="score-icon coral">TR</span><span><strong id="tr-label">Task Response</strong><small>Answers and develops the task</small></span><b id="score-tr">7.0</b></button>
+                  <button class="score-row" data-criterion="CC"><span class="score-icon blue">CC</span><span><strong>Coherence &amp; Cohesion</strong><small>Organises and connects ideas</small></span><b id="score-cc">7.0</b></button>
+                  <button class="score-row" data-criterion="LR"><span class="score-icon gold">LR</span><span><strong>Lexical Resource</strong><small>Uses precise, natural language</small></span><b id="score-lr">7.0</b></button>
+                  <button class="score-row" data-criterion="GRA"><span class="score-icon green">G</span><span><strong>Grammar Range &amp; Accuracy</strong><small>Controls varied structures</small></span><b id="score-gra">6.5</b></button>
+                </div>
+                <div class="criterion-detail" id="criterion-detail"></div>
+                <button class="secondary-button" id="copy-feedback">Copy feedback</button>
+              </div>
+              <div id="comments-panel" class="feedback-tab-panel" role="tabpanel" aria-labelledby="comments-tab" hidden>
+                <div class="comments-head"><h2>Revision comments</h2><p>Keep short notes for this prompt. They stay in this browser.</p></div>
+                <form id="comment-form" class="comment-form"><label for="comment-input">Add a comment</label><textarea id="comment-input" rows="4" maxlength="500" placeholder="What should change in the next draft?"></textarea><div><small><span id="comment-characters">0</span>/500</small><button type="submit">Save comment</button></div></form>
+                <div id="comment-list" class="comment-list"></div>
+              </div>
+            </aside>
+          </div>
+
+          <section class="next-actions"><div class="section-heading"><div><span class="small-label">Next best steps</span><h2>Fix what moves the score.</h2></div><p>Three focused actions are more useful than twenty vague corrections.</p></div><div class="action-grid" id="action-grid"></div></section>
+        </section>
+
+        <section class="view" id="library-view">
+          <div class="library-hero">
+            <div class="hero-art" aria-hidden="true"><span class="sun"></span><span class="mountain far"></span><span class="mountain near"></span><span class="tree one"></span><span class="tree two"></span><span class="tree three"></span></div>
+            <div class="library-hero-copy"><p class="eyebrow">IELTS WRITING LANGUAGE LIBRARY</p><h1>Learn language in<br /><em>the place you will use it.</em></h1><p>Explore Task 1 language by visual type and Task 2 language by topic. Every entry includes a pattern, an original example and a band range.</p><div class="hero-pills"><span id="library-total">150+ language entries</span><span>Band 5–8+</span><span>Original examples</span></div></div>
+          </div>
+          <div class="library-shell">
+            <div class="library-topline"><div class="task-switch" role="group" aria-label="Library task"><button class="active" data-library-task="task1">Task 1</button><button data-library-task="task2">Task 2</button></div><label class="library-search"><span>⌕</span><input id="library-search" type="search" placeholder="Search a word, pattern or topic" /></label></div>
+            <div class="library-layout">
+              <aside class="category-panel card"><span class="small-label" id="category-kicker">TASK 1 COLLECTIONS</span><h2 id="category-title">Choose a visual type</h2><div id="category-list" class="category-list"></div></aside>
+              <section class="language-panel card">
+                <div class="language-head"><div><span class="small-label" id="language-kicker">LINE GRAPHS</span><h2 id="language-title">Describing movement over time</h2><p id="language-description"></p></div><div class="result-count"><strong id="entry-count">0</strong><span>entries</span></div></div>
+                <div class="filter-row"><div class="band-filters" id="band-filters"><button class="active" data-band="all">All bands</button><button data-band="5-6">Band 5–6</button><button data-band="6-7">Band 6–7</button><button data-band="7-8">Band 7–8+</button></div><select id="kind-filter" aria-label="Language type"><option value="all">All language types</option><option value="Vocabulary">Vocabulary</option><option value="Collocation">Collocations</option><option value="Verb pattern">Verb patterns</option><option value="Adjective">Adjectives</option><option value="Noun">Nouns</option></select></div>
+                <div id="language-list" class="language-list"></div>
+              </section>
+            </div>
+            <section class="library-method"><div><span class="small-label light">A BETTER WAY TO LEARN</span><h2>Build a usable language system.</h2></div><ol><li><span>01</span><strong>Notice the pattern</strong><small>Learn the words around a term, not the term alone.</small></li><li><span>02</span><strong>Check the register</strong><small>Prefer neutral academic English to memorised “big words”.</small></li><li><span>03</span><strong>Write a new sentence</strong><small>Transfer the pattern to a different IELTS topic.</small></li><li><span>04</span><strong>Retrieve it later</strong><small>Use Practice Room until the pattern becomes automatic.</small></li></ol></section>
+          </div>
+        </section>
+
+        <section class="view" id="practice-view">
+          <div class="page-intro practice-intro"><div><p class="eyebrow">ACTIVE PRACTICE</p><h1>Turn recognition into<br /><em>writing control.</em></h1><p class="lead">A <strong id="practice-bank-total">66-question bank</strong> trains word choice, word families, sentence logic and paragraph structure through short, shuffled activities.</p></div><div class="practice-summary"><span class="small-label">TODAY'S SESSION</span><strong id="session-score">0 correct</strong><span id="session-progress">0 of 20 completed</span></div></div>
+          <div class="practice-layout">
+            <aside class="activity-menu card"><span class="small-label">ACTIVITY TYPE</span><button class="active" data-mode="all"><span>✦</span><div><strong>Mixed practice</strong><small>All activity types</small></div></button><button data-mode="cloze"><span>□</span><div><strong>Fill the gap</strong><small>Grammar and collocation</small></div></button><button data-mode="mcq"><span>○</span><div><strong>Multiple choice</strong><small>Meaning and use</small></div></button><button data-mode="best-word"><span>⌁</span><div><strong>Best word</strong><small>Precision in context</small></div></button><button data-mode="word-family"><span>◇</span><div><strong>Word families</strong><small>Correct form</small></div></button><button data-mode="matching"><span>↔</span><div><strong>Match sentence halves</strong><small>Logic and grammar</small></div></button><button data-mode="highlight"><span>▤</span><div><strong>Paragraph highlighting</strong><small>Topic, support, example</small></div></button></aside>
+            <section class="practice-card card" id="practice-card" aria-live="polite"></section>
+            <aside class="practice-tip card"><span class="small-label">WHY THIS MATTERS</span><div class="tip-icon">✎</div><h3 id="tip-title">Retrieve, do not reread.</h3><p id="tip-copy">Choosing an answer forces you to distinguish natural academic patterns from combinations that merely look possible.</p><div class="source-card"><span>Built from</span><strong>Two IELTS vocabulary books</strong><small>Adapted into original IELTS Writing examples.</small></div></aside>
+          </div>
+        </section>
+      </main>
+
+      <footer><span>RubricLab</span><span>Scores are learning estimates and do not replace an official IELTS result.</span><span>Independent IELTS practice</span></footer>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="./content-expansion.js?v=10-spider"></script>
+    <script src="./prompt-sources.js?v=10-spider"></script>
+    <script src="./app.js?v=10-spider"></script>
+  </body>
+</html>
