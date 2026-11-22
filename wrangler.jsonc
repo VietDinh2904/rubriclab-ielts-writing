@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "rubriclab-ielts-writing",
+  "main": "./src/worker.js",
+  "compatibility_date": "2026-11-22",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rubriclab-production",
+      "database_id": "PASTE_D1_DATABASE_ID_HERE",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "TEACHER_EMAILS": ""
+  }
+}

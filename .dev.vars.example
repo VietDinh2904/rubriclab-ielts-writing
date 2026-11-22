@@ -1,0 +1,4 @@
+# Local development only. Copy to .dev.vars and never commit the real file.
+DEV_TEACHER_MODE="true"
+# Optional. When set, public submissions must include a valid Turnstile token.
+TURNSTILE_SECRET=""

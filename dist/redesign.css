@@ -13,6 +13,7 @@
   --shadow: 0 12px 32px rgba(23,42,58,.08);
   --radius: 16px;
 }
+[hidden] { display: none !important; }
 
 body { color: var(--ink); background: #f7f8f5; font-size: 16px; line-height: 1.5; }
 button, input, textarea, select { font-size: 1rem; }
@@ -84,6 +85,24 @@ select { min-height: 40px; border-color: var(--line); border-radius: 8px; backgr
 .annotation-tools strong { font-size: .86rem; }
 .annotation-tools span { color: var(--muted); font-size: .76rem; }
 .annotation-tools input { width: 100%; min-height: 38px; padding: 8px 10px; border: 1px solid #cfd8da; border-radius: 7px; background: white; font-size: .84rem; }
+.teacher-entry { color: var(--teal); font-size: .82rem; font-weight: 800; text-decoration: none; }
+.teacher-entry:hover { text-decoration: underline; }
+.submission-profile { margin: 0 20px 10px; padding: 12px; display: grid; grid-template-columns: minmax(220px,1.2fr) minmax(150px,.7fr) minmax(180px,.9fr); align-items: end; gap: 10px; border: 1px solid var(--line); border-radius: 10px; background: #f6f8f8; }
+.submission-profile > div { align-self: center; display: grid; gap: 2px; }
+.submission-profile strong { font-size: .88rem; }
+.submission-profile span { color: var(--muted); font-size: .76rem; }
+.submission-profile label { display: grid; gap: 4px; }
+.submission-profile label > span { font-weight: 700; }
+.submission-profile input,.free-prompt-fields input,.free-prompt-fields textarea { width: 100%; min-height: 39px; padding: 8px 10px; border: 1px solid #c5d2d3; border-radius: 7px; background: white; color: var(--ink); font-size: .84rem; }
+.free-prompt-fields { margin: 0 20px 14px; padding: 15px; display: grid; gap: 11px; border: 1px solid var(--line); border-radius: 10px; background: #f7faf9; }
+.free-prompt-fields[hidden] { display: none; }
+.free-prompt-fields label { display: grid; gap: 5px; }
+.free-prompt-fields textarea { resize: vertical; line-height: 1.5; }
+.submission-notice { margin: 0 20px 2px; padding: 11px 13px; border: 1px solid #bcd7d1; border-radius: 8px; color: var(--teal); background: #eef9f6; font-size: .82rem; line-height: 1.45; }
+.submission-notice.error { border-color: #efb9b1; color: #913b30; background: #fff2f0; }
+.submission-notice strong { display: block; margin-bottom: 3px; }
+.score-row b.empty-score { color: #92a0a3; }
+.secondary-button:disabled { opacity: .55; cursor: not-allowed; }
 .annotation-actions { display: flex; gap: 6px; }
 .mark-button { min-height: 38px; padding: 7px 10px; border: 1px solid transparent; border-radius: 7px; font-size: .78rem; font-weight: 700; cursor: pointer; }
 .mark-button.strong { color: #1f6647; border-color: #9ac9b1; background: #e8f5ed; }
@@ -183,6 +202,7 @@ select { min-height: 40px; border-color: var(--line); border-radius: 8px; backgr
   .workspace-grid, .next-actions { width: min(100% - 32px,720px); }
   .prompt-list { grid-template-columns: 1fr; }
   .annotation-tools { grid-template-columns: 1fr; }
+  .submission-profile { grid-template-columns: 1fr; }
   .annotation-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .essay-workspace { grid-template-columns: 1fr; }
   .annotation-rail { min-height: 0 !important; border-top: 1px solid var(--line); border-left: 0; }
@@ -198,6 +218,7 @@ select { min-height: 40px; border-color: var(--line); border-radius: 8px; backgr
   .prompt-control-row { align-items: stretch; }
   .prompt-navigation { display: grid; grid-template-columns: 1fr 1fr; }
   .annotation-tools, .essay-workspace { margin-right: 14px; margin-left: 14px; }
+  .submission-profile, .submission-notice, .free-prompt-fields { margin-right: 14px; margin-left: 14px; }
   .essay-input { min-height: 440px; padding-right: 20px; padding-left: 42px; }
   .editor-footer { align-items: stretch; }
   .feedback-tabs button { font-size: .86rem; }

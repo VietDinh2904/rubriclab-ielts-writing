@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#174b49" />
+    <meta name="description" content="RubricLab teacher workspace for manual IELTS Writing review." />
+    <title>Teacher Review — RubricLab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./teacher.css?v=1" />
+  </head>
+  <body>
+    <header class="teacher-topbar">
+      <a class="brand" href="./index.html"><span>R</span>RubricLab</a>
+      <div><strong>Teacher Review</strong><small>Manual IELTS feedback</small></div>
+      <a class="student-link" href="./index.html">Open student room</a>
+    </header>
+
+    <main class="teacher-layout">
+      <aside class="queue-panel">
+        <div class="queue-heading">
+          <div><span class="eyebrow">REVIEW QUEUE</span><h1>Student writing</h1></div>
+          <button id="refresh-queue" type="button" aria-label="Refresh submissions">Refresh</button>
+        </div>
+        <label class="filter-label" for="queue-filter">Show</label>
+        <select id="queue-filter">
+          <option value="all">All submissions</option>
+          <option value="submitted">Waiting for review</option>
+          <option value="in_review">In review</option>
+          <option value="reviewed">Review saved</option>
+          <option value="returned">Returned</option>
+        </select>
+        <div id="queue-status" class="queue-status">Loading submissions…</div>
+        <div id="submission-list" class="submission-list" role="list"></div>
+      </aside>
+
+      <section class="review-panel">
+        <div id="review-empty" class="review-empty">
+          <span>✎</span>
+          <h2>Select a submission</h2>
+          <p>Choose an essay from the review queue to add rubric scores and evidence-linked comments.</p>
+        </div>
+
+        <div id="review-workspace" hidden>
+          <div class="submission-header">
+            <div><span id="submission-task" class="task-chip"></span><h2 id="submission-student"></h2><p id="submission-meta"></p></div>
+            <span id="submission-state" class="status-chip"></span>
+          </div>
+
+          <section class="prompt-card">
+            <span class="eyebrow">PROMPT</span>
+            <h3 id="submission-title"></h3>
+            <p id="submission-prompt"></p>
+          </section>
+
+          <div class="review-grid">
+            <section class="essay-card">
+              <div class="essay-heading">
+                <div><span class="eyebrow">STUDENT RESPONSE</span><strong id="submission-word-count"></strong></div>
+                <small>Select text to attach a comment.</small>
+              </div>
+              <div class="comment-toolbar">
+                <input id="annotation-comment" type="text" maxlength="1000" placeholder="Comment on the selected text" />
+                <button id="add-strong" type="button">Mark as strong</button>
+                <button id="add-revision" type="button">Needs revision</button>
+              </div>
+              <div class="essay-with-comments">
+                <article id="review-essay" class="review-essay" tabindex="0"></article>
+                <aside id="annotation-list" class="annotation-list" aria-label="Inline comments"></aside>
+              </div>
+            </section>
+
+            <aside class="rubric-card">
+              <span class="eyebrow">IELTS RUBRIC</span>
+              <h3>Teacher scores</h3>
+              <div class="score-fields">
+                <label><span id="task-score-label">Task Response</span><select id="score-tr"></select></label>
+                <label><span>Coherence &amp; Cohesion</span><select id="score-cc"></select></label>
+                <label><span>Lexical Resource</span><select id="score-lr"></select></label>
+                <label><span>Grammar Range &amp; Accuracy</span><select id="score-gra"></select></label>
+              </div>
+              <div class="overall-band"><span>Overall band</span><strong id="overall-band">—</strong></div>
+              <label class="feedback-field"><span>Glow · evidence of success</span><textarea id="feedback-glow" rows="4" placeholder="Quote or describe what works well."></textarea></label>
+              <label class="feedback-field"><span>Grow · one improvement priority</span><textarea id="feedback-grow" rows="4" placeholder="Name the most important next improvement."></textarea></label>
+              <label class="feedback-field"><span>Go · concrete next action</span><textarea id="feedback-next" rows="4" placeholder="Give one action the learner can complete next."></textarea></label>
+              <label class="feedback-field private"><span>Private teacher note</span><textarea id="private-note" rows="3" placeholder="Not visible to the student."></textarea></label>
+              <div class="review-actions">
+                <button id="save-review" type="button">Save review</button>
+                <button id="return-review" type="button">Return to student</button>
+              </div>
+              <p id="save-status" class="save-status" role="status"></p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="./teacher.js?v=1"></script>
+  </body>
+</html>

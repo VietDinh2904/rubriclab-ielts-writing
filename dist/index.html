@@ -21,41 +21,46 @@
           <button class="nav-item" data-view="library">Library</button>
           <button class="nav-item" data-view="practice">Practice Room</button>
         </nav>
-        <div class="header-actions"><span class="streak"><span>●</span> 5-day streak</span><button class="avatar" aria-label="Open learner profile">HL</button></div>
+        <div class="header-actions"><a class="teacher-entry" href="./teacher.html">Teacher Review</a><button class="avatar" aria-label="Learner profile">HL</button></div>
       </header>
 
       <main>
         <section class="view active" id="writing-view">
           <div class="page-intro writing-intro">
             <div><h1>Write, review, revise.</h1><p class="lead">Choose an IELTS prompt, write your response, then turn rubric feedback and comments into a clear next draft.</p></div>
-            <div class="goal-card"><div><span>Current estimate</span><strong>6.5</strong></div><div><span>Target</span><strong>7.0</strong></div><p>Focus on one improvement at a time.</p></div>
+            <div class="goal-card"><div><span>Review method</span><strong>Human</strong></div><div><span>Rubric</span><strong>IELTS</strong></div><p>Focused teacher feedback, without an automatic AI score.</p></div>
           </div>
 
           <div class="workspace-grid">
             <section class="editor-card card">
               <div class="editor-toolbar">
-                <div class="segmented" role="group" aria-label="Writing task"><button class="segment" data-task="task1">Academic Task 1 <span id="task1-prompt-count">12</span></button><button class="segment active" data-task="task2">Task 2 <span id="task2-prompt-count">24</span></button></div>
+                <div class="segmented" role="group" aria-label="Writing task"><button class="segment" data-task="task1">Academic Task 1 <span id="task1-prompt-count">12</span></button><button class="segment active" data-task="task2">Task 2 <span id="task2-prompt-count">24</span></button><button class="segment" data-task="free">Free writing</button></div>
                 <div class="editor-meta"><label>Target band<select id="target-band" aria-label="Target band"><option>6.0</option><option>6.5</option><option selected>7.0</option><option>7.5</option><option>8.0</option></select></label><button class="icon-button" id="new-draft" title="Start a new draft" aria-label="Start a new draft">＋</button></div>
               </div>
-              <details class="prompt-browser">
+              <details class="prompt-browser" id="prompt-browser">
                 <summary><div><strong id="prompt-library-title">48 Task 2 prompts</strong><span id="prompt-library-count">Choose a topic to start writing</span></div><span class="browse-prompts">Browse prompts</span></summary>
                 <div id="prompt-list" class="prompt-list" role="list" aria-label="Writing prompts"></div>
               </details>
-              <div class="prompt-control-row"><div class="selected-prompt-meta"><span class="field-label">Selected prompt</span><strong id="prompt-title"></strong><small id="prompt-position"></small></div><div class="prompt-navigation"><button id="previous-prompt" type="button">Previous</button><button id="next-prompt" type="button">Next</button></div></div>
+              <div class="prompt-control-row" id="prompt-control-row"><div class="selected-prompt-meta"><span class="field-label">Selected prompt</span><strong id="prompt-title"></strong><small id="prompt-position"></small></div><div class="prompt-navigation"><button id="previous-prompt" type="button">Previous</button><button id="next-prompt" type="button">Next</button></div></div>
+              <div id="free-prompt-fields" class="free-prompt-fields" hidden>
+                <label><span class="field-label">Topic title</span><input id="free-prompt-title" type="text" maxlength="300" placeholder="e.g. Technology and independent learning" /></label>
+                <label><span class="field-label">Your writing prompt</span><textarea id="free-prompt-text" rows="4" maxlength="10000" placeholder="Paste or write the question you want your teacher to review."></textarea></label>
+              </div>
               <p id="prompt" class="prompt-copy"></p>
               <div id="prompt-source" class="prompt-source"></div>
               <div id="task-visual" class="task-visual" hidden></div>
               <div class="essay-label-row"><label class="field-label" for="essay">Your response</label><span id="autosave-status">Draft saved locally</span></div>
-              <div class="annotation-tools" aria-label="Writing annotation tools">
-                <div><strong>Comment on the writing</strong><span>Select words or a sentence, then choose a comment type.</span></div>
-                <input id="annotation-comment" type="text" maxlength="180" placeholder="Add a short comment (optional)" aria-label="Annotation comment" />
-                <div class="annotation-actions"><button id="mark-strong" type="button" class="mark-button strong">Mark as strong</button><button id="mark-revision" type="button" class="mark-button revision">Needs revision</button></div>
+              <div class="submission-profile" aria-label="Student submission details">
+                <div><strong>Submit for teacher review</strong><span>Your private student and submission tokens stay in this browser.</span></div>
+                <label><span>Name</span><input id="student-name" type="text" maxlength="100" autocomplete="name" placeholder="Student name" /></label>
+                <label><span>Email (optional)</span><input id="student-email" type="email" maxlength="254" autocomplete="email" placeholder="name@example.com" /></label>
               </div>
               <div class="essay-workspace">
                 <div id="essay" class="essay-input" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Your response"></div>
                 <aside id="annotation-rail" class="annotation-rail" aria-label="Comments linked to highlighted writing"><div class="annotation-empty">Comments will appear beside the highlighted text.</div></aside>
               </div>
-              <div class="editor-footer"><div class="writing-stats"><span><strong id="word-count">0</strong> words</span><span><strong id="paragraph-count">0</strong> paragraphs</span><span id="word-target" class="status-good">On target</span></div><button class="primary-button" id="analyse-button">Review by rubric</button></div>
+              <div id="submission-notice" class="submission-notice" hidden></div>
+              <div class="editor-footer"><div class="writing-stats"><span><strong id="word-count">0</strong> words</span><span><strong id="paragraph-count">0</strong> paragraphs</span><span id="word-target" class="status-good">On target</span></div><button class="primary-button" id="analyse-button">Submit for teacher review</button></div>
             </section>
 
             <aside class="feedback-panel card" aria-live="polite">
@@ -69,20 +74,19 @@
                     <svg viewBox="0 0 180 180" aria-hidden="true"><g class="radar-grid"><polygon points="90,83.9 96.1,90 90,96.1 83.9,90"></polygon><polygon points="90,71.7 108.3,90 90,108.3 71.7,90"></polygon><polygon points="90,59.4 120.6,90 90,120.6 59.4,90"></polygon><polygon points="90,47.2 132.8,90 90,132.8 47.2,90"></polygon><polygon points="90,35 145,90 90,145 35,90"></polygon><line x1="90" y1="90" x2="90" y2="35"></line><line x1="90" y1="90" x2="145" y2="90"></line><line x1="90" y1="90" x2="90" y2="145"></line><line x1="90" y1="90" x2="35" y2="90"></line></g><polygon class="radar-score" points="90,47.2 132.8,90 90,132.8 50.3,90"></polygon><g class="radar-dots"><circle cx="90" cy="47.2" r="3.5"></circle><circle cx="132.8" cy="90" r="3.5"></circle><circle cx="90" cy="132.8" r="3.5"></circle><circle cx="50.3" cy="90" r="3.5"></circle></g><g class="radar-labels"><text x="90" y="17" text-anchor="middle">TR / TA</text><text x="164" y="94" text-anchor="middle">CC</text><text x="90" y="171" text-anchor="middle">LR</text><text x="16" y="94" text-anchor="middle">GRA</text></g></svg>
                   </div>
                   <div class="radar-key" aria-hidden="true"><span><b>TR / TA</b>Task response</span><span><b>CC</b>Coherence</span><span><b>LR</b>Vocabulary</span><span><b>GRA</b>Grammar</span></div>
-                  <div class="radar-copy"><div><span>Estimated result</span><div class="overall"><strong id="overall-score">7.0</strong><span>Overall band</span></div></div><span class="analysis-state"><i></i> Ready to review</span></div>
+                  <div class="radar-copy"><div><span>Teacher result</span><div class="overall"><strong id="overall-score">—</strong><span>Overall band</span></div></div><span class="analysis-state"><i></i> Not submitted</span></div>
                 </div>
                 <div class="score-list">
-                  <button class="score-row active" data-criterion="TR"><span class="score-icon coral">TR</span><span><strong id="tr-label">Task Response</strong><small>Answers and develops the task</small></span><b id="score-tr">7.0</b></button>
-                  <button class="score-row" data-criterion="CC"><span class="score-icon blue">CC</span><span><strong>Coherence &amp; Cohesion</strong><small>Organises and connects ideas</small></span><b id="score-cc">7.0</b></button>
-                  <button class="score-row" data-criterion="LR"><span class="score-icon gold">LR</span><span><strong>Lexical Resource</strong><small>Uses precise, natural language</small></span><b id="score-lr">7.0</b></button>
-                  <button class="score-row" data-criterion="GRA"><span class="score-icon green">G</span><span><strong>Grammar Range &amp; Accuracy</strong><small>Controls varied structures</small></span><b id="score-gra">6.5</b></button>
+                  <button class="score-row active" data-criterion="TR"><span class="score-icon coral">TR</span><span><strong id="tr-label">Task Response</strong><small>Answers and develops the task</small></span><b id="score-tr">—</b></button>
+                  <button class="score-row" data-criterion="CC"><span class="score-icon blue">CC</span><span><strong>Coherence &amp; Cohesion</strong><small>Organises and connects ideas</small></span><b id="score-cc">—</b></button>
+                  <button class="score-row" data-criterion="LR"><span class="score-icon gold">LR</span><span><strong>Lexical Resource</strong><small>Uses precise, natural language</small></span><b id="score-lr">—</b></button>
+                  <button class="score-row" data-criterion="GRA"><span class="score-icon green">G</span><span><strong>Grammar Range &amp; Accuracy</strong><small>Controls varied structures</small></span><b id="score-gra">—</b></button>
                 </div>
                 <div class="criterion-detail" id="criterion-detail"></div>
-                <button class="secondary-button" id="copy-feedback">Copy feedback</button>
+                <button class="secondary-button" id="copy-feedback" disabled>Copy returned feedback</button>
               </div>
               <div id="comments-panel" class="feedback-tab-panel" role="tabpanel" aria-labelledby="comments-tab" hidden>
-                <div class="comments-head"><h2>Revision comments</h2><p>Keep short notes for this prompt. They stay in this browser.</p></div>
-                <form id="comment-form" class="comment-form"><label for="comment-input">Add a comment</label><textarea id="comment-input" rows="4" maxlength="500" placeholder="What should change in the next draft?"></textarea><div><small><span id="comment-characters">0</span>/500</small><button type="submit">Save comment</button></div></form>
+                <div class="comments-head"><h2>Teacher comments</h2><p>Glow, Grow and Go feedback will appear after the teacher returns this submission.</p></div>
                 <div id="comment-list" class="comment-list"></div>
               </div>
             </aside>
@@ -120,7 +124,7 @@
         </section>
       </main>
 
-      <footer><span>RubricLab</span><span>Scores are learning estimates and do not replace an official IELTS result.</span><span>Independent IELTS practice</span></footer>
+      <footer><span>RubricLab</span><span>Teacher feedback supports learning and does not replace an official IELTS result.</span><span>Independent IELTS practice</span></footer>
     </div>
     <div class="toast" id="toast" role="status"></div>
     <script src="./content-expansion.js?v=10-spider"></script>
