@@ -13,7 +13,7 @@
     {
       "binding": "DB",
       "database_name": "rubriclab-production",
-      "database_id": "PASTE_D1_DATABASE_ID_HERE",
+      "database_id": "f576c32f-a704-4444-87d5-acd9f2782a5b",
       "migrations_dir": "migrations"
     }
   ],
